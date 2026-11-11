@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>اتحاد ملاك بيت العيلة</title>
+<style>
+:root{--navy:#17365d;--gold:#d9a441;--bg:#f3f5f8;--white:#fff;--ink:#182a42}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Arial,Tahoma,sans-serif;color:var(--ink)}
+header{background:linear-gradient(135deg,#10294d,var(--navy));color:white;padding:20px 16px}
+header h1{margin:0 0 6px;font-size:22px}header p{margin:0;color:#dbe6f2;font-size:13px}
+main{max-width:950px;margin:auto;padding:14px}.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.card{background:white;padding:14px;border-radius:12px;box-shadow:0 2px 8px #0000000b}.stat{font-size:24px;font-weight:bold;color:var(--navy);margin-top:7px}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}button{border:0;border-radius:9px;padding:10px 14px;background:var(--navy);color:white;font-weight:bold;cursor:pointer}button.active,.goldbtn{background:var(--gold);color:#10294d}
+section{display:none;background:white;border-radius:12px;padding:16px;margin:10px 0}section.active{display:block}input,select{padding:10px;border:1px solid #ccd5df;border-radius:8px;width:100%;margin:5px 0 10px;font:inherit}
+.rowform{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:500px}th,td{padding:9px;border-bottom:1px solid #e5eaf0;text-align:right}th{background:#eaf0f6;color:var(--navy)}.pill{padding:4px 8px;border-radius:8px;background:#fff2d4}.hint{font-size:12px;color:#65758a}
+@media(max-width:600px){.summary{grid-template-columns:1fr 1fr}.rowform{grid-template-columns:1fr}}
+</style></head>
+<body>
+<header><h1>🏢 اتحاد ملاك بيت العيلة</h1><p>لوحة الإدارة — محلية على جهازك، مع جاهزية لإضافة المزامنة السحابية</p></header>
+<main>
+<div class="summary">
+<div class="card">عدد الوحدات<div class="stat">48</div><small>12 دور × 4 وحدات</small></div>
+<div class="card">الاشتراكات الشهرية<div class="stat" id="due">11,350 ج</div><small>مكتب الجلوي منفصل</small></div>
+<div class="card">المتحصل هذا الشهر<div class="stat" id="paidtotal">0 ج</div><small>حسب المدفوعات المسجلة</small></div>
+</div>
+<nav><button class="active" data-tab="units">الوحدات</button><button data-tab="payments">التحصيل</button><button data-tab="expenses">المصاريف</button><button data-tab="reports">التقارير</button><button data-tab="backup" class="goldbtn">النسخ الاحتياطي</button></nav>
+<section id="units" class="active"><h2>السكان والوحدات</h2><input id="search" placeholder="ابحث برقم الوحدة أو اسم الساكن"><div class="tablewrap"><table><thead><tr><th>الوحدة</th><th>الدور</th><th>اسم الساكن</th><th>الاشتراك</th><th>تعديل الاسم</th></tr></thead><tbody id="unitrows"></tbody></table></div></section>
+<section id="payments"><h2>تسجيل تحصيل</h2><div class="rowform"><div><label>رقم الوحدة</label><select id="payunit"></select></div><div><label>المبلغ (جنيه)</label><input id="payamount" type="number" min="0" value="250"></div><div><label>تاريخ السداد</label><input id="paydate" type="date"></div></div><button id="addpay">حفظ الدفعة</button><h3>الدفعات المسجلة</h3><div class="tablewrap"><table><thead><tr><th>الوحدة</th><th>المبلغ</th><th>التاريخ</th><th>حذف</th></tr></thead><tbody id="payrows"></tbody></table></div></section>
+<section id="expenses"><h2>تسجيل مصروف</h2><div class="rowform"><div><label>بند المصروف</label><select id="expcat"><option>كهرباء السلم</option><option>مياه العمارة</option><option>صيانة المصعد</option><option>النظافة</option><option>أجر البواب</option><option>صيانة السباكة</option><option>صيانة الكهرباء</option><option>مستلزمات</option><option>إصلاحات عامة</option><option>أخرى</option></select></div><div><label>المبلغ</label><input id="expamount" type="number" min="0"></div><div><label>التاريخ</label><input id="expdate" type="date"></div></div><label>تفاصيل</label><input id="expnote" placeholder="تفاصيل المصروف أو رقم الإيصال"><button id="addexp">حفظ المصروف</button><h3>المصروفات</h3><div class="tablewrap"><table><thead><tr><th>البند</th><th>المبلغ</th><th>التاريخ</th><th>تفاصيل</th><th>حذف</th></tr></thead><tbody id="exprows"></tbody></table></div></section>
+<section id="reports"><h2>ملخص الحسابات</h2><div class="card">إجمالي الاشتراكات الشهرية<div class="stat" id="reportdue"></div></div><div class="card">إجمالي التحصيل<div class="stat" id="reportpaid"></div></div><div class="card">إجمالي المصروفات<div class="stat" id="reportexp"></div></div><div class="card">الرصيد (تحصيل − مصروفات)<div class="stat" id="balance"></div></div></section>
+<section id="backup"><h2>نسخ احتياطي واستعادة</h2><p>البيانات محفوظة في المتصفح على هذا الجهاز. احتفظ بنسخة احتياطية بانتظام.</p><button id="export">تنزيل نسخة JSON</button><label>استعادة نسخة JSON</label><input id="importfile" type="file" accept=".json"><p class="hint">تنبيه: هذا الإصدار يحفظ محليًا فقط. لم يتم ربط Firebase بعد؛ يلزم إعداد مشروع Firebase ومفاتيح الوصول قبل تشغيل المزامنة السحابية.</p></section>
+<p class="hint">نسخة أولية قابلة للتجربة — لا تستخدمها كنسخة وحيدة للبيانات المهمة قبل إعداد النسخ الاحتياطي والمزامنة.</p>
+</main>
+<script>
+const residentNames = {"101": "جمال قطب", "102": "محمود صالح", "103": "صابر", "104": "الحاج فؤاد", "201": "إيهاب جمال", "202": "أحمد العدل", "203": "ربيع أبوهاجر", "204": "أسامة شوقي", "301": "أحمد أبو عبده", "302": "أم محمد", "303": "حماده أبو مريم", "304": "مجدي", "401": "كريم جمال", "402": "أم يزيد", "403": "محمود عوف", "404": "لولا", "501": "أم أحمد", "502": "مغلقة وخالية", "503": "أم عبدالرحمن", "504": "ياسر الخاوي", "601": "محمد عبدالرحمن", "602": "مغلقة وخالية", "603": "سعيد فاروق", "604": "مصطفى صاوي", "701": "حسام محمد", "702": "أحمد هاشم", "703": "حسن محمد", "704": "حاتم", "801": "جمال محمد", "802": "محمد حاموكشا", "803": "أم هيثم", "804": "عمرو"};
+const defaultUnits=[];for(let f=1;f<=12;f++)for(let u=1;u<=4;u++){let n=f*100+u;defaultUnits.push({id:n,floor:f,name:residentNames[n]||"",fee:f<=2?225:250});}
+let state=JSON.parse(localStorage.getItem("bayt_state")||"null")||{units:defaultUnits,payments:[],expenses:[]};
+// Add names from the resident roster to existing local data without overwriting names already entered.
+state.units.forEach(u=>{if(residentNames[u.id] && (!u.name || !u.name.trim())) u.name=residentNames[u.id];});
+localStorage.setItem("bayt_state",JSON.stringify(state));
+function save(){localStorage.setItem("bayt_state",JSON.stringify(state));render();}
+function money(n){return Number(n||0).toLocaleString("ar-EG")+" ج";}
+function render(){
+let q=(document.getElementById("search").value||"").trim();
+document.getElementById("unitrows").innerHTML=state.units.filter(u=>String(u.id).includes(q)||u.name.includes(q)).map(u=>`<tr><td>${u.id}</td><td>${u.floor}</td><td>${u.name||"—"}</td><td>${u.fee}</td><td><input data-name="${u.id}" value="${u.name}" placeholder="اسم الساكن"></td></tr>`).join("");
+document.querySelectorAll("[data-name]").forEach(el=>el.onchange=()=>{state.units.find(u=>u.id==el.dataset.name).name=el.value;save();});
+document.getElementById("payunit").innerHTML=state.units.map(u=>`<option value="${u.id}">${u.id}</option>`).join("");
+document.getElementById("payrows").innerHTML=state.payments.map((p,i)=>`<tr><td>${p.unit}</td><td>${money(p.amount)}</td><td>${p.date}</td><td><button onclick="delpay(${i})">حذف</button></td></tr>`).join("");
+document.getElementById("exprows").innerHTML=state.expenses.map((e,i)=>`<tr><td>${e.cat}</td><td>${money(e.amount)}</td><td>${e.date}</td><td>${e.note||""}</td><td><button onclick="delexp(${i})">حذف</button></td></tr>`).join("");
+let total=state.units.reduce((a,u)=>a+u.fee,0)+100,paid=state.payments.reduce((a,p)=>a+Number(p.amount),0),exp=state.expenses.reduce((a,e)=>a+Number(e.amount),0);
+document.getElementById("due").textContent=money(total);document.getElementById("paidtotal").textContent=money(paid);
+document.getElementById("reportdue").textContent=money(total);document.getElementById("reportpaid").textContent=money(paid);document.getElementById("reportexp").textContent=money(exp);document.getElementById("balance").textContent=money(paid-exp);
+}
+window.delpay=i=>{state.payments.splice(i,1);save()};window.delexp=i=>{state.expenses.splice(i,1);save()};
+document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.querySelectorAll("section").forEach(x=>x.classList.toggle("active",x.id===b.dataset.tab));});
+document.getElementById("search").oninput=render;
+document.getElementById("addpay").onclick=()=>{let amount=+document.getElementById("payamount").value;if(amount<=0)return alert("أدخل مبلغًا صحيحًا");state.payments.push({unit:+document.getElementById("payunit").value,amount,date:document.getElementById("paydate").value});save();alert("تم حفظ الدفعة على هذا الجهاز");};
+document.getElementById("addexp").onclick=()=>{let amount=+document.getElementById("expamount").value;if(amount<=0)return alert("أدخل مبلغًا صحيحًا");state.expenses.push({cat:document.getElementById("expcat").value,amount,date:document.getElementById("expdate").value,note:document.getElementById("expnote").value});save();alert("تم حفظ المصروف على هذا الجهاز");};
+document.getElementById("export").onclick=()=>{let blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="bayt-el3ela-backup.json";a.click();URL.revokeObjectURL(a.href);};
+document.getElementById("importfile").onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{state=JSON.parse(r.result);save();alert("تمت الاستعادة");}catch{alert("ملف غير صالح");}};r.readAsText(f);};
+render();
+</script></body></html>
