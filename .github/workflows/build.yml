@@ -4,8 +4,7 @@ name: Build Beit el3ela APK
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   build:
@@ -15,17 +14,37 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: 21
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Prepare web files
+        run: |
+          mkdir -p www
+          cp index.html www/index.html
+
+      - name: Install Capacitor
+        run: |
+          npm init -y
+          npm install @capacitor/core@7 @capacitor/android@7
+          npm install -D @capacitor/cli@7
+
+      - name: Create Android project
+        run: |
+          npx cap init "Beit el3ela" "com.ga280264.beitel3ela" --web-dir=www
+          npx cap add android
+          npx cap sync android
 
       - name: Build APK
         run: |
+          cd android
           chmod +x gradlew
           ./gradlew assembleDebug
 
