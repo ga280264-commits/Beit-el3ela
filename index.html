@@ -1,127 +1,295 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#17365d">
 <title>اتحاد ملاك بيت العيلة</title>
 <style>
-:root{--navy:#17365d;--gold:#d9a441;--bg:#f3f5f8;--white:#fff;--ink:#182a42}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Arial,Tahoma,sans-serif;color:var(--ink)}
-header{background:linear-gradient(135deg,#10294d,var(--navy));color:white;padding:20px 16px}
-header h1{margin:0 0 6px;font-size:22px}header p{margin:0;color:#dbe6f2;font-size:13px}
-main{max-width:950px;margin:auto;padding:14px}.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.card{background:white;padding:14px;border-radius:12px;box-shadow:0 2px 8px #0000000b}.stat{font-size:24px;font-weight:bold;color:var(--navy);margin-top:7px}
-nav{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}button{border:0;border-radius:9px;padding:10px 14px;background:var(--navy);color:white;font-weight:bold;cursor:pointer}button.active,.goldbtn{background:var(--gold);color:#10294d}
-section{display:none;background:white;border-radius:12px;padding:16px;margin:10px 0}section.active{display:block}input,select{padding:10px;border:1px solid #ccd5df;border-radius:8px;width:100%;margin:5px 0 10px;font:inherit}
-.rowform{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:500px}th,td{padding:9px;border-bottom:1px solid #e5eaf0;text-align:right}th{background:#eaf0f6;color:var(--navy)}.pill{padding:4px 8px;border-radius:8px;background:#fff2d4}.hint{font-size:12px;color:#65758a}
-@media(max-width:600px){.summary{grid-template-columns:1fr 1fr}.rowform{grid-template-columns:1fr}}
-</style></head>
+:root{--navy:#17365d;--gold:#d9a441;--bg:#f3f6fa;--white:#fff;--green:#198754;--red:#dc3545}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Tahoma,Arial,sans-serif;color:#263445}
+header{background:var(--navy);color:white;text-align:center;padding:25px 12px;border-bottom:5px solid var(--gold)}
+header h1{margin:0 0 9px;font-size:25px}
+header p{margin:0;color:#f5d58d;font-size:15px}
+header small{display:block;margin-top:12px;color:#fff;font-size:13px}
+.container{max-width:950px;margin:20px auto;padding:0 12px}
+.card{background:white;padding:18px;margin-bottom:16px;border-radius:12px;box-shadow:0 2px 9px #00000010}
+h2{color:var(--navy);font-size:19px;margin:0 0 15px}
+label{display:block;margin:12px 0 6px;font-weight:bold;font-size:14px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #ccd3dc;border-radius:7px;font-size:15px;background:white}
+button{border:0;border-radius:7px;padding:11px 17px;font-size:14px;font-weight:bold;cursor:pointer;margin:5px 2px}
+.primary{background:var(--navy);color:white}
+.gold{background:var(--gold);color:#222}
+.green{background:var(--green);color:white}
+.red{background:var(--red);color:white}
+.gray{background:#e8edf3;color:#263445}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{background:#edf2f8;padding:15px 5px;text-align:center;border-radius:9px}
+.stat strong{display:block;font-size:24px;color:var(--navy)}
+.stat span{font-size:12px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.unit{border:1px solid #dce2e9;border-radius:9px;padding:13px;margin:9px 0;background:#fff}
+.unit h3{margin:0 0 8px;color:var(--navy);font-size:16px}
+.unit p{margin:5px 0;font-size:13px}
+.unit-actions{margin-top:8px}
+.badge{background:#e8f5ed;color:#198754;padding:4px 8px;border-radius:20px;font-size:12px}
+.search{margin-bottom:12px}
+.hidden{display:none}
+footer{text-align:center;padding:20px;color:#777;font-size:12px}
+hr{border:0;border-top:1px solid #eee;margin:16px 0}
+@media(max-width:550px){.row{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}header h1{font-size:21px}}
+</style>
+</head>
 <body>
-<header><h1>🏢 اتحاد ملاك بيت العيلة</h1><p>لوحة الإدارة — محلية على جهازك، مع جاهزية لإضافة المزامنة السحابية</p></header>
-<main>
-<div class="summary">
-<div class="card">
-  عدد الوحدات
-  <div class="stat" id="totalUnits">48</div>
-  <small id="unitsDescription">12 دور × 4 وحدات</small>
+
+<header>
+<h1>اتحاد ملاك بيت العيلة</h1>
+<p>معاً لإدارة أفضل وتنظيم مستمر</p>
+<small>Designed by Gamal Kotb</small>
+</header>
+
+<main class="container">
+
+<section class="card">
+<h2>لوحة التحكم</h2>
+<div class="stats">
+<div class="stat"><strong id="totalFloors">0</strong><span>عدد الأدوار</span></div>
+<div class="stat"><strong id="totalUnits">0</strong><span>عدد الوحدات</span></div>
+<div class="stat"><strong id="registeredUnits">0</strong><span>وحدات مسجلة</span></div>
 </div>
-<div class="card">الاشتراكات الشهرية<div class="stat" id="due">11,350 ج</div><small>مكتب الجلوي منفصل</small></div>
-<div class="card">المتحصل هذا الشهر<div class="stat" id="paidtotal">0 ج</div><small>حسب المدفوعات المسجلة</small></div>
+</section>
+
+<section class="card">
+<h2>إعداد المبنى</h2>
+<div class="row">
+<div>
+<label for="floorsCount">عدد الأدوار</label>
+<input type="number" id="floorsCount" min="1" max="50" value="12">
 </div>
-<nav><button class="active" data-tab="units">الوحدات</button><button data-tab="payments">التحصيل</button><button data-tab="expenses">المصاريف</button><button data-tab="reports">التقارير</button><button data-tab="backup" class="goldbtn">النسخ الاحتياطي</button></nav>
-<section id="units" class="active"><h2>السكان والوحدات</h2><div class="card">
-  <h3>إعداد عدد الوحدات</h3>
-  <label>عدد الأدوار</label>
-  <input type="number" id="floorsCount" min="1" max="50" value="12">
-  <label>عدد الوحدات في كل دور</label>
-  <input type="number" id="unitsPerFloor" min="1" max="50" value="4">
-  <button onclick="changeUnitsCount()">تحديث عدد الوحدات</button>
-</div><div class="card">
-  <h3>إعداد عدد الوحدات</h3>
-  <label>عدد الأدوار</label>
-  <input type="number" id="floorsCount" min="1" max="50" value="12">
-  <label>عدد الوحدات في كل دور</label>
-  <input type="number" id="unitsPerFloor" min="1" max="50" value="4">
-  <button onclick="changeUnitsCount()">تحديث عدد الوحدات</button>
-</div><input id="search" placeholder="ابحث برقم الوحدة أو اسم الساكن"><div class="tablewrap"><table><thead><tr><th>الوحدة</th><th>الدور</th><th>اسم الساكن</th><th>الاشتراك</th><th>تعديل الاسم</th></tr></thead><tbody id="unitrows"></tbody></table></div></section>
-<section id="payments"><h2>تسجيل تحصيل</h2><div class="rowform"><div><label>رقم الوحدة</label><select id="payunit"></select></div><div><label>المبلغ (جنيه)</label><input id="payamount" type="number" min="0" value="250"></div><div><label>تاريخ السداد</label><input id="paydate" type="date"></div></div><button id="addpay">حفظ الدفعة</button><h3>الدفعات المسجلة</h3><div class="tablewrap"><table><thead><tr><th>الوحدة</th><th>المبلغ</th><th>التاريخ</th><th>حذف</th></tr></thead><tbody id="payrows"></tbody></table></div></section>
-<section id="expenses"><h2>تسجيل مصروف</h2><div class="rowform"><div><label>بند المصروف</label><select id="expcat"><option>كهرباء السلم</option><option>مياه العمارة</option><option>صيانة المصعد</option><option>النظافة</option><option>أجر البواب</option><option>صيانة السباكة</option><option>صيانة الكهرباء</option><option>مستلزمات</option><option>إصلاحات عامة</option><option>أخرى</option></select></div><div><label>المبلغ</label><input id="expamount" type="number" min="0"></div><div><label>التاريخ</label><input id="expdate" type="date"></div></div><label>تفاصيل</label><input id="expnote" placeholder="تفاصيل المصروف أو رقم الإيصال"><button id="addexp">حفظ المصروف</button><h3>المصروفات</h3><div class="tablewrap"><table><thead><tr><th>البند</th><th>المبلغ</th><th>التاريخ</th><th>تفاصيل</th><th>حذف</th></tr></thead><tbody id="exprows"></tbody></table></div></section>
-<section id="reports"><h2>ملخص الحسابات</h2><div class="card">إجمالي الاشتراكات الشهرية<div class="stat" id="reportdue"></div></div><div class="card">إجمالي التحصيل<div class="stat" id="reportpaid"></div></div><div class="card">إجمالي المصروفات<div class="stat" id="reportexp"></div></div><div class="card">الرصيد (تحصيل − مصروفات)<div class="stat" id="balance"></div></div></section>
-<section id="backup"><h2>نسخ احتياطي واستعادة</h2><p>البيانات محفوظة في المتصفح على هذا الجهاز. احتفظ بنسخة احتياطية بانتظام.</p><button id="export">تنزيل نسخة JSON</button><label>استعادة نسخة JSON</label><input id="importfile" type="file" accept=".json"><p class="hint">تنبيه: هذا الإصدار يحفظ محليًا فقط. لم يتم ربط Firebase بعد؛ يلزم إعداد مشروع Firebase ومفاتيح الوصول قبل تشغيل المزامنة السحابية.</p></section>
-<p class="hint">نسخة أولية قابلة للتجربة — لا تستخدمها كنسخة وحيدة للبيانات المهمة قبل إعداد النسخ الاحتياطي والمزامنة.</p>
+<div>
+<label for="unitsPerFloor">عدد الوحدات في كل دور</label>
+<input type="number" id="unitsPerFloor" min="1" max="50" value="4">
+</div>
+</div>
+<button class="primary" onclick="generateUnits()">حفظ إعدادات المبنى</button>
+<p style="font-size:12px;color:#777">تغيير العدد يحافظ على بيانات الوحدات الموجودة ما دامت أرقامها لم تتغير.</p>
+</section>
+
+<section class="card">
+<h2>بيانات الوحدات والملاك</h2>
+<input class="search" id="searchBox" placeholder="ابحث برقم الوحدة أو اسم المالك..." oninput="renderUnits()">
+<div id="unitsList"></div>
+</section>
+
+<section class="card hidden" id="editCard">
+<h2 id="editTitle">بيانات الوحدة</h2>
+<input type="hidden" id="editId">
+<label>رقم الوحدة</label>
+<input id="unitNumber" disabled>
+<label>اسم المالك</label>
+<input id="ownerName" placeholder="اكتب اسم المالك">
+<label>رقم الهاتف</label>
+<input id="ownerPhone" type="tel" placeholder="رقم الهاتف">
+<label>ملاحظات</label>
+<textarea id="unitNotes" rows="3" placeholder="اكتب أي ملاحظات"></textarea>
+<button class="green" onclick="saveUnit()">حفظ البيانات</button>
+<button class="gray" onclick="closeEditor()">إلغاء</button>
+</section>
+
+<section class="card">
+<h2>إدارة البيانات</h2>
+<button class="primary" onclick="exportData()">تصدير نسخة احتياطية</button>
+<button class="gray" onclick="document.getElementById('importFile').click()">استعادة نسخة احتياطية</button>
+<input type="file" id="importFile" accept=".json,application/json" class="hidden" onchange="importData(event)">
+<button class="gray" onclick="window.print()">طباعة البيانات</button>
+</section>
+
 </main>
-<script>}const defaultUnits=[];
-const floorsCount=12;
-const unitsPerFloor=4;
 
-for(let f=1;f<=floorsCount;f++){
-  for(let u=1;u<=unitsPerFloor;u++){
-    let n=f*100+u;
-    defaultUnits.push({
-      id:n,
-      floor:f,
-      name:"",
-      fee:f<=2?225:250
-    });
+<footer>
+اتحاد ملاك بيت العيلة © 2026
+</footer>
+
+<script>
+const STORAGE_KEY = "beit_el3ela_data_v1";
+
+let appData = {
+ floors: 12,
+ perFloor: 4,
+ units: []
+};
+
+function loadData(){
+ try{
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if(saved){
+   const parsed = JSON.parse(saved);
+   if(parsed && Array.isArray(parsed.units)){
+    appData = parsed;
+   }
   }
+ }catch(e){
+  alert("تعذر قراءة البيانات المحفوظة.");
+ }
+ document.getElementById("floorsCount").value=appData.floors;
+ document.getElementById("unitsPerFloor").value=appData.perFloor;
+ if(appData.units.length===0) generateUnits(false);
+ else renderUnits();
 }
-let state=JSON.parse(localStorage.getItem("bayt_state")||"null")||{units:defaultUnits,payments:[],expenses:[]};
-function save(){localStorage.setItem("bayt_state",JSON.stringify(state));render();}
-function money(n){return Number(n||0).toLocaleString("ar-EG")+" ج";}
-function changeUnitsCount(){
-  const floors = Number(document.getElementById("floorsCount").value);
-  const perFloor = Number(document.getElementById("unitsPerFloor").value);
 
-  if(!Number.isInteger(floors) || floors < 1 || floors > 50 ||
-     !Number.isInteger(perFloor) || perFloor < 1 || perFloor > 50){
-    alert("يرجى إدخال عدد صحيح من 1 إلى 50");
-    return;
-  }
-
-  const oldUnits = state.units;
-  const newUnits = [];
-
-  for(let f=1; f<=floors; f++){
-    for(let u=1; u<=perFloor; u++){
-      const id = f*100+u;
-      const existing = oldUnits.find(x => x.id === id);
-
-      newUnits.push(existing || {
-        id:id,
-        floor:f,
-        name:"",
-        fee:f<=2?225:250
-      });
-    }
-  }
-
-  if(newUnits.length < oldUnits.length &&
-     !confirm("سيتم استبعاد بعض الوحدات من القائمة. هل تريد الاستمرار؟")){
-    return;
-  }
-
-  state.units = newUnits;
-  save();
-  alert("تم تحديث عدد الوحدات");
-document.getElementById("totalUnits").textContent = state.units.length;
-document.getElementById("unitsDescription").textContent =
-  (state.units.length ? Math.max(...state.units.map(x => x.floor)) : 0) +
-  " دور — " + state.units.length + " وحدة";}function render(){
-let q=(document.getElementById("search").value||"").trim();
-document.getElementById("unitrows").innerHTML=state.units.filter(u=>String(u.id).includes(q)||u.name.includes(q)).map(u=>`<tr><td>${u.id}</td><td>${u.floor}</td><td>${u.name||"—"}</td><td>${u.fee}</td><td><input data-name="${u.id}" value="${u.name}" placeholder="اسم الساكن"></td></tr>`).join("");
-document.querySelectorAll("[data-name]").forEach(el=>el.onchange=()=>{state.units.find(u=>u.id==el.dataset.name).name=el.value;save();});
-document.getElementById("payunit").innerHTML=state.units.map(u=>`<option value="${u.id}">${u.id}</option>`).join("");
-document.getElementById("payrows").innerHTML=state.payments.map((p,i)=>`<tr><td>${p.unit}</td><td>${money(p.amount)}</td><td>${p.date}</td><td><button onclick="delpay(${i})">حذف</button></td></tr>`).join("");
-document.getElementById("exprows").innerHTML=state.expenses.map((e,i)=>`<tr><td>${e.cat}</td><td>${money(e.amount)}</td><td>${e.date}</td><td>${e.note||""}</td><td><button onclick="delexp(${i})">حذف</button></td></tr>`).join("");
-let total=state.units.reduce((a,u)=>a+u.fee,0)+100,paid=state.payments.reduce((a,p)=>a+Number(p.amount),0),exp=state.expenses.reduce((a,e)=>a+Number(e.amount),0);
-document.getElementById("due").textContent=money(total);document.getElementById("paidtotal").textContent=money(paid);
-document.getElementById("reportdue").textContent=money(total);document.getElementById("reportpaid").textContent=money(paid);document.getElementById("reportexp").textContent=money(exp);document.getElementById("balance").textContent=money(paid-exp);
+function saveData(){
+ localStorage.setItem(STORAGE_KEY,JSON.stringify(appData));
 }
-window.delpay=i=>{state.payments.splice(i,1);save()};window.delexp=i=>{state.expenses.splice(i,1);save()};
-document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.querySelectorAll("section").forEach(x=>x.classList.toggle("active",x.id===b.dataset.tab));});
-document.getElementById("search").oninput=render;
-document.getElementById("addpay").onclick=()=>{let amount=+document.getElementById("payamount").value;if(amount<=0)return alert("أدخل مبلغًا صحيحًا");state.payments.push({unit:+document.getElementById("payunit").value,amount,date:document.getElementById("paydate").value});save();alert("تم حفظ الدفعة على هذا الجهاز");};
-document.getElementById("addexp").onclick=()=>{let amount=+document.getElementById("expamount").value;if(amount<=0)return alert("أدخل مبلغًا صحيحًا");state.expenses.push({cat:document.getElementById("expcat").value,amount,date:document.getElementById("expdate").value,note:document.getElementById("expnote").value});save();alert("تم حفظ المصروف على هذا الجهاز");};
-document.getElementById("export").onclick=()=>{let blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="bayt-el3ela-backup.json";a.click();URL.revokeObjectURL(a.href);};
-document.getElementById("importfile").onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{state=JSON.parse(r.result);save();alert("تمت الاستعادة");}catch{alert("ملف غير صالح");}};r.readAsText(f);};
-render();
-</script></body></html>
+
+function generateUnits(showMessage=true){
+ const floors=Number(document.getElementById("floorsCount").value);
+ const perFloor=Number(document.getElementById("unitsPerFloor").value);
+
+ if(!Number.isInteger(floors)||floors<1||floors>50||
+    !Number.isInteger(perFloor)||perFloor<1||perFloor>50){
+  alert("من فضلك أدخل أعداداً صحيحة من 1 إلى 50.");
+  return;
+ }
+
+ const oldUnits=new Map(appData.units.map(u=>[u.id,u]));
+ const newUnits=[];
+
+ for(let f=1;f<=floors;f++){
+  for(let n=1;n<=perFloor;n++){
+   const id=f+"-"+n;
+   newUnits.push(oldUnits.get(id)||{
+    id:id,
+    floor:f,
+    number:n,
+    owner:"",
+    phone:"",
+    notes:""
+   });
+  }
+ }
+
+ appData.floors=floors;
+ appData.perFloor=perFloor;
+ appData.units=newUnits;
+ saveData();
+ renderUnits();
+
+ if(showMessage) alert("تم حفظ إعدادات المبنى بنجاح.");
+}
+
+function renderUnits(){
+ const list=document.getElementById("unitsList");
+ const query=document.getElementById("searchBox").value.trim().toLowerCase();
+
+ const filtered=appData.units.filter(u=>
+  (("دور "+u.floor+" وحدة "+u.number).toLowerCase().includes(query))||
+  (u.owner||"").toLowerCase().includes(query)||
+  (u.phone||"").includes(query)
+ );
+
+ document.getElementById("totalFloors").textContent=appData.floors;
+ document.getElementById("totalUnits").textContent=appData.units.length;
+ document.getElementById("registeredUnits").textContent=
+  appData.units.filter(u=>u.owner.trim()!=="").length;
+
+ if(filtered.length===0){
+  list.innerHTML="<p>لا توجد وحدات مطابقة للبحث.</p>";
+  return;
+ }
+
+ list.innerHTML=filtered.map(u=>`
+  <div class="unit">
+   <h3>الدور ${u.floor} - الوحدة ${u.number}</h3>
+   <p>المالك: ${escapeHTML(u.owner||"غير مسجل")}</p>
+   <p>الهاتف: ${escapeHTML(u.phone||"غير مسجل")}</p>
+   <p>الحالة: ${u.owner?'<span class="badge">مسجلة</span>':'<span class="badge">بيانات ناقصة</span>'}</p>
+   <div class="unit-actions">
+    <button class="primary" onclick="editUnit('${u.id}')">تعديل البيانات</button>
+   </div>
+  </div>
+ `).join("");
+}
+
+function escapeHTML(value){
+ return String(value).replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ })[c]);
+}
+
+function editUnit(id){
+ const unit=appData.units.find(u=>u.id===id);
+ if(!unit)return;
+
+ document.getElementById("editCard").classList.remove("hidden");
+ document.getElementById("editId").value=id;
+ document.getElementById("unitNumber").value=
+  "الدور "+unit.floor+" - الوحدة "+unit.number;
+ document.getElementById("ownerName").value=unit.owner;
+ document.getElementById("ownerPhone").value=unit.phone;
+ document.getElementById("unitNotes").value=unit.notes;
+
+ document.getElementById("editCard").scrollIntoView({behavior:"smooth"});
+}
+
+function saveUnit(){
+ const id=document.getElementById("editId").value;
+ const unit=appData.units.find(u=>u.id===id);
+ if(!unit)return;
+
+ unit.owner=document.getElementById("ownerName").value.trim();
+ unit.phone=document.getElementById("ownerPhone").value.trim();
+ unit.notes=document.getElementById("unitNotes").value.trim();
+
+ saveData();
+ closeEditor();
+ renderUnits();
+ alert("تم حفظ بيانات الوحدة بنجاح.");
+}
+
+function closeEditor(){
+ document.getElementById("editCard").classList.add("hidden");
+}
+
+function exportData(){
+ const blob=new Blob([JSON.stringify(appData,null,2)],{type:"application/json"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ a.href=url;
+ a.download="beit-el3ela-backup.json";
+ a.click();
+ URL.revokeObjectURL(url);
+}
+
+function importData(event){
+ const file=event.target.files[0];
+ if(!file)return;
+
+ const reader=new FileReader();
+ reader.onload=function(){
+  try{
+   const data=JSON.parse(reader.result);
+   if(!Array.isArray(data.units)||!Number.isInteger(data.floors)||
+      !Number.isInteger(data.perFloor))throw new Error();
+
+   if(!confirm("استعادة النسخة ستستبدل البيانات الحالية. هل تريد المتابعة؟"))return;
+
+   appData=data;
+   saveData();
+   document.getElementById("floorsCount").value=appData.floors;
+   document.getElementById("unitsPerFloor").value=appData.perFloor;
+   renderUnits();
+   alert("تمت استعادة البيانات بنجاح.");
+  }catch(e){
+   alert("الملف غير صالح أو لا يحتوي على بيانات التطبيق.");
+  }
+  event.target.value="";
+ };
+ reader.readAsText(file);
+}
+
+loadData();
+</script>
+</body>
+</html>
