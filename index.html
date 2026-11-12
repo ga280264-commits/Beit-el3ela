@@ -19,24 +19,93 @@ section{display:none;background:white;border-radius:12px;padding:16px;margin:10p
 <header><h1>🏢 اتحاد ملاك بيت العيلة</h1><p>لوحة الإدارة — محلية على جهازك، مع جاهزية لإضافة المزامنة السحابية</p></header>
 <main>
 <div class="summary">
-<div class="card">عدد الوحدات<div class="stat">48</div><small>12 دور × 4 وحدات</small></div>
+<div class="card">
+  عدد الوحدات
+  <div class="stat" id="totalUnits">48</div>
+  <small id="unitsDescription">12 دور × 4 وحدات</small>
+</div>
 <div class="card">الاشتراكات الشهرية<div class="stat" id="due">11,350 ج</div><small>مكتب الجلوي منفصل</small></div>
 <div class="card">المتحصل هذا الشهر<div class="stat" id="paidtotal">0 ج</div><small>حسب المدفوعات المسجلة</small></div>
 </div>
 <nav><button class="active" data-tab="units">الوحدات</button><button data-tab="payments">التحصيل</button><button data-tab="expenses">المصاريف</button><button data-tab="reports">التقارير</button><button data-tab="backup" class="goldbtn">النسخ الاحتياطي</button></nav>
-<section id="units" class="active"><h2>السكان والوحدات</h2><input id="search" placeholder="ابحث برقم الوحدة أو اسم الساكن"><div class="tablewrap"><table><thead><tr><th>الوحدة</th><th>الدور</th><th>اسم الساكن</th><th>الاشتراك</th><th>تعديل الاسم</th></tr></thead><tbody id="unitrows"></tbody></table></div></section>
+<section id="units" class="active"><h2>السكان والوحدات</h2><div class="card">
+  <h3>إعداد عدد الوحدات</h3>
+  <label>عدد الأدوار</label>
+  <input type="number" id="floorsCount" min="1" max="50" value="12">
+  <label>عدد الوحدات في كل دور</label>
+  <input type="number" id="unitsPerFloor" min="1" max="50" value="4">
+  <button onclick="changeUnitsCount()">تحديث عدد الوحدات</button>
+</div><div class="card">
+  <h3>إعداد عدد الوحدات</h3>
+  <label>عدد الأدوار</label>
+  <input type="number" id="floorsCount" min="1" max="50" value="12">
+  <label>عدد الوحدات في كل دور</label>
+  <input type="number" id="unitsPerFloor" min="1" max="50" value="4">
+  <button onclick="changeUnitsCount()">تحديث عدد الوحدات</button>
+</div><input id="search" placeholder="ابحث برقم الوحدة أو اسم الساكن"><div class="tablewrap"><table><thead><tr><th>الوحدة</th><th>الدور</th><th>اسم الساكن</th><th>الاشتراك</th><th>تعديل الاسم</th></tr></thead><tbody id="unitrows"></tbody></table></div></section>
 <section id="payments"><h2>تسجيل تحصيل</h2><div class="rowform"><div><label>رقم الوحدة</label><select id="payunit"></select></div><div><label>المبلغ (جنيه)</label><input id="payamount" type="number" min="0" value="250"></div><div><label>تاريخ السداد</label><input id="paydate" type="date"></div></div><button id="addpay">حفظ الدفعة</button><h3>الدفعات المسجلة</h3><div class="tablewrap"><table><thead><tr><th>الوحدة</th><th>المبلغ</th><th>التاريخ</th><th>حذف</th></tr></thead><tbody id="payrows"></tbody></table></div></section>
 <section id="expenses"><h2>تسجيل مصروف</h2><div class="rowform"><div><label>بند المصروف</label><select id="expcat"><option>كهرباء السلم</option><option>مياه العمارة</option><option>صيانة المصعد</option><option>النظافة</option><option>أجر البواب</option><option>صيانة السباكة</option><option>صيانة الكهرباء</option><option>مستلزمات</option><option>إصلاحات عامة</option><option>أخرى</option></select></div><div><label>المبلغ</label><input id="expamount" type="number" min="0"></div><div><label>التاريخ</label><input id="expdate" type="date"></div></div><label>تفاصيل</label><input id="expnote" placeholder="تفاصيل المصروف أو رقم الإيصال"><button id="addexp">حفظ المصروف</button><h3>المصروفات</h3><div class="tablewrap"><table><thead><tr><th>البند</th><th>المبلغ</th><th>التاريخ</th><th>تفاصيل</th><th>حذف</th></tr></thead><tbody id="exprows"></tbody></table></div></section>
 <section id="reports"><h2>ملخص الحسابات</h2><div class="card">إجمالي الاشتراكات الشهرية<div class="stat" id="reportdue"></div></div><div class="card">إجمالي التحصيل<div class="stat" id="reportpaid"></div></div><div class="card">إجمالي المصروفات<div class="stat" id="reportexp"></div></div><div class="card">الرصيد (تحصيل − مصروفات)<div class="stat" id="balance"></div></div></section>
 <section id="backup"><h2>نسخ احتياطي واستعادة</h2><p>البيانات محفوظة في المتصفح على هذا الجهاز. احتفظ بنسخة احتياطية بانتظام.</p><button id="export">تنزيل نسخة JSON</button><label>استعادة نسخة JSON</label><input id="importfile" type="file" accept=".json"><p class="hint">تنبيه: هذا الإصدار يحفظ محليًا فقط. لم يتم ربط Firebase بعد؛ يلزم إعداد مشروع Firebase ومفاتيح الوصول قبل تشغيل المزامنة السحابية.</p></section>
 <p class="hint">نسخة أولية قابلة للتجربة — لا تستخدمها كنسخة وحيدة للبيانات المهمة قبل إعداد النسخ الاحتياطي والمزامنة.</p>
 </main>
-<script>
-const defaultUnits=[];for(let f=1;f<=12;f++)for(let u=1;u<=4;u++){let n=f*100+u;defaultUnits.push({id:n,floor:f,name:"",fee:f<=2?225:250});}
+<script>}const defaultUnits=[];
+const floorsCount=12;
+const unitsPerFloor=4;
+
+for(let f=1;f<=floorsCount;f++){
+  for(let u=1;u<=unitsPerFloor;u++){
+    let n=f*100+u;
+    defaultUnits.push({
+      id:n,
+      floor:f,
+      name:"",
+      fee:f<=2?225:250
+    });
+  }
+}
 let state=JSON.parse(localStorage.getItem("bayt_state")||"null")||{units:defaultUnits,payments:[],expenses:[]};
 function save(){localStorage.setItem("bayt_state",JSON.stringify(state));render();}
 function money(n){return Number(n||0).toLocaleString("ar-EG")+" ج";}
-function render(){
+function changeUnitsCount(){
+  const floors = Number(document.getElementById("floorsCount").value);
+  const perFloor = Number(document.getElementById("unitsPerFloor").value);
+
+  if(!Number.isInteger(floors) || floors < 1 || floors > 50 ||
+     !Number.isInteger(perFloor) || perFloor < 1 || perFloor > 50){
+    alert("يرجى إدخال عدد صحيح من 1 إلى 50");
+    return;
+  }
+
+  const oldUnits = state.units;
+  const newUnits = [];
+
+  for(let f=1; f<=floors; f++){
+    for(let u=1; u<=perFloor; u++){
+      const id = f*100+u;
+      const existing = oldUnits.find(x => x.id === id);
+
+      newUnits.push(existing || {
+        id:id,
+        floor:f,
+        name:"",
+        fee:f<=2?225:250
+      });
+    }
+  }
+
+  if(newUnits.length < oldUnits.length &&
+     !confirm("سيتم استبعاد بعض الوحدات من القائمة. هل تريد الاستمرار؟")){
+    return;
+  }
+
+  state.units = newUnits;
+  save();
+  alert("تم تحديث عدد الوحدات");
+document.getElementById("totalUnits").textContent = state.units.length;
+document.getElementById("unitsDescription").textContent =
+  (state.units.length ? Math.max(...state.units.map(x => x.floor)) : 0) +
+  " دور — " + state.units.length + " وحدة";}function render(){
 let q=(document.getElementById("search").value||"").trim();
 document.getElementById("unitrows").innerHTML=state.units.filter(u=>String(u.id).includes(q)||u.name.includes(q)).map(u=>`<tr><td>${u.id}</td><td>${u.floor}</td><td>${u.name||"—"}</td><td>${u.fee}</td><td><input data-name="${u.id}" value="${u.name}" placeholder="اسم الساكن"></td></tr>`).join("");
 document.querySelectorAll("[data-name]").forEach(el=>el.onchange=()=>{state.units.find(u=>u.id==el.dataset.name).name=el.value;save();});
